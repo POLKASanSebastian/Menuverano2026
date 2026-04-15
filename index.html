@@ -3,238 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PÓLKA - Menú del Día</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&display=swap');
+
         :root {
-            /* Azul Klein Internacional (IKB) */
-            --polka-blue: #002FA7;
+            --polka-klein: #002FA7;
+            --polka-white: #ffffff;
         }
+
         body {
-            font-family: 'Special Elite', system-ui, serif;
-            background-color: #e5e7eb;
-            color: var(--polka-blue);
-            display: flex;
-            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f2f5;
+            color: var(--polka-klein);
+            margin: 0;
             padding: 20px;
         }
-        .canvas {
-            background-color: white;
-            width: 100%;
-            max-width: 800px;
-            padding: 60px 80px;
-            position: relative;
-            border: 3.5px solid var(--polka-blue);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            overflow: visible;
-        }
-        /* Doble marco característico */
-        .canvas::after {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-            border: 1.5px solid var(--polka-blue);
-            pointer-events: none;
-        }
-        /* Título lateral ajustado (Solo "POLKA", más a la derecha) */
-        .sideways-title {
-            position: absolute;
-            left: -20px;
-            top: 50%;
-            transform: rotate(-90deg) translateY(-50%);
-            transform-origin: center center;
-            font-family: 'Oswald', sans-serif;
-            font-size: 2.5rem;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: var(--polka-blue);
-            font-weight: 700;
-            white-space: nowrap;
-            opacity: 0.7;
-        }
-        .main-header {
-            font-family: 'Oswald', sans-serif;
-            font-size: 3.5rem;
-            text-align: center;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 5px;
-            line-height: 1.1;
-        }
-        .section-title {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2.2rem;
-            text-align: center;
-            border-top: 3px solid var(--polka-blue);
-            border-bottom: 3px solid var(--polka-blue);
-            display: inline-block;
-            padding: 0 50px;
-            margin: 25px 0;
-            position: relative;
-            font-weight: 700;
-        }
-        .subtitle {
-            font-size: 0.9rem;
-            text-align: center;
-            margin-top: -18px;
-            margin-bottom: 35px;
-            letter-spacing: 3px;
-            font-weight: bold;
-        }
-        .dish-container {
-            text-align: center;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 10;
-        }
-        .dish-name {
-            font-weight: bold;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            margin-bottom: 2px;
-        }
-        .dish-detail {
-            font-size: 0.85rem;
-            max-width: 85%;
+
+        .menu-container {
+            max-width: 900px;
             margin: 0 auto;
-            line-height: 1.4;
-            color: #1a1a1a;
+            background-color: var(--polka-white);
+            border: 3px solid var(--polka-klein);
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0, 47, 167, 0.15);
         }
-        .price-section {
+
+        .logo-header {
             text-align: center;
-            margin-top: 40px;
+            margin-bottom: 30px;
+            border-bottom: 1.5px solid var(--polka-klein);
+            padding-bottom: 20px;
         }
-        .complement-text {
-            font-size: 0.75rem;
-            font-weight: bold;
-            font-style: italic;
-            margin-bottom: 10px;
-        }
-        .main-price {
-            font-size: 3.5rem;
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
+
+        .logo-main {
+            font-weight: 800;
+            letter-spacing: 10px;
+            font-size: 3rem;
             line-height: 1;
-            color: var(--polka-blue);
+            color: var(--polka-klein);
         }
-        .iva-text {
+
+        .menu-title {
+            background-color: var(--polka-klein);
+            color: white;
+            display: inline-block;
+            padding: 5px 25px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 1.2rem;
+            margin-top: 15px;
+        }
+
+        .section-box {
+            border: 1.5px solid var(--polka-klein);
+            padding: 25px;
+            height: 100%;
+            position: relative;
+        }
+
+        .category-label {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--polka-klein);
+            color: white;
+            padding: 2px 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             font-size: 0.8rem;
-            margin-top: 5px;
-            font-weight: bold;
-            display: block;
-            letter-spacing: 1.5px;
+            white-space: nowrap;
         }
-        .footer-info {
-            font-size: 0.75rem;
-            border-top: 2px solid var(--polka-blue);
-            padding-top: 15px;
-            margin-top: 25px;
+
+        .dish-item {
+            margin-bottom: 20px;
             text-align: center;
-            font-weight: bold;
+        }
+
+        .dish-name {
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            line-height: 1.2;
+            display: block;
+        }
+
+        .dish-description {
+            font-size: 0.75rem;
             line-height: 1.4;
+            margin-top: 4px;
+            font-weight: 400;
+            color: #444;
             max-width: 90%;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        .tag-plus {
+            background-color: #fef9c3;
+            color: #854d0e;
+            font-size: 0.65rem;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-weight: 800;
+            margin-left: 5px;
+            border: 1px solid #ca8a04;
+        }
+
+        .price-hero {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border: 2px dashed var(--polka-klein);
+        }
+
+        .main-price {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--polka-klein);
+        }
+
+        .iva-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .footer-details {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-top: 1.5px solid var(--polka-klein);
+            padding-top: 15px;
+            line-height: 1.6;
+        }
+
+        .horario {
+            font-style: italic;
+            opacity: 0.7;
+            margin-top: 10px;
+            font-size: 0.65rem;
+        }
+
+        .complementos {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 640px) {
+            .menu-container { padding: 20px; }
+            .logo-main { font-size: 2rem; }
+            .grid-cols-2 { grid-template-columns: 1fr; }
+            .section-box { margin-bottom: 30px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="canvas">
-        <!-- Texto lateral -->
-        <div class="sideways-title">POLKA</div>
+<div class="menu-container">
 
-        <!-- Encabezado Principal -->
-        <div class="main-header">
-            MENÚ POLKERO
-        </div>
-
-        <!-- Cabecera Primeros -->
-        <div class="text-center">
-            <h1 class="section-title">PRIMEROS</h1>
-            <p class="subtitle">A ELEGIR</p>
-        </div>
-
-        <!-- Lista Primeros -->
-        <div class="space-y-5">
-            <div class="dish-container">
-                <div class="dish-name">LA POLKA RUSA</div>
-                <div class="dish-detail">NUESTRA ENSALADILLA RUSA CON PRODUCTOS KM 0, PIPARRAS, VENTRESCA, BONIATO, ANTXOA, ACEITUNAS Y MAHONESA DE VENTRESCA.</div>
-            </div>
-
-            <div class="dish-container">
-                <div class="dish-name">ENSALADA DE TOMATE MARINERA CON BURRATA</div>
-                <div class="dish-detail">TOMATE KM 0, SARDINAS EN ACEITE, BURRATA, MIEL DE URBASA, RÚCULA Y PIPARRA.</div>
-            </div>
-
-            <div class="dish-container">
-                <div class="dish-name">ENSALADA DE PASTA</div>
-                <div class="dish-detail">PASTA COCIDA, PERLAS DE MOZZARELLA, TOMATITOS CHERRY, LECHUGA, EDAMAME, ACEITUNAS NEGRAS Y VINAGRETA DE PESTO.</div>
-            </div>
-
-            <div class="dish-container">
-                <div class="dish-name">POLKE SALMÓN BOWL</div>
-                <div class="dish-detail">SALMÓN FRESCO, ARROZ BASMATI, LECHUGA, GUACAMOLE, CHUTNEY DE MANGO, TOMATITOS, SÉSAMO Y SALSA TERIYAKI.</div>
-            </div>
-        </div>
-
-        <!-- Cabecera Segundos -->
-        <div class="text-center mt-10">
-            <h1 class="section-title">SEGUNDOS</h1>
-            <p class="subtitle">A ELEGIR</p>
-        </div>
-
-        <!-- Lista Segundos -->
-        <div class="space-y-5">
-            <div class="dish-container">
-                <div class="dish-name">TXERRI PULLED BUN</div>
-                <div class="dish-detail">ESPONJOSO PAN DE BRIOCHE, CARNE DE CERDO DESMECHADA, QUESO CHEDDAR, LECHUGA, CEBOLLA ROJA, CEBOLLA CRISPY Y SALSA POLKERA.</div>
-            </div>
-
-            <div class="dish-container">
-                <div class="dish-name">CHICKEN BURGER 1838</div>
-                <div class="dish-detail">ESPONJOSO PAN DE BRIOCHE, MUSLO DE POLLO FRITO, HUEVO COCIDO, CEBOLLA CARAMELIZADA, LECHUGA Y MAHONESA DE AJOS.</div>
-            </div>
-
-            <div class="dish-container">
-                <div class="dish-name">TAKO-TALO COCHINO BBQ</div>
-                <div class="dish-detail">TORTITAS DE MAÍZ, CERDO DESMECHADO, GUACAMOLE, JALAPEÑOS, QUESO CHEDDAR Y CEBOLLA MORADA.</div>
-            </div>
-
-            <div class="dish-container">
-                <div class="dish-name">WOK LUMAGORRI TANDOORI <span class="text-sm font-sans">(+3€)</span></div>
-                <div class="dish-detail">POLLO LUMAGORRI EN ESPECIAS TANDOORI, FIDEOS SOBA, PIMIENTO DE GERNIKA, JENGIBRE Y TXAKOLI. MAHONESA DE CHORICERO.</div>
-            </div>
-
-            <div class="dish-container">
-                <div class="dish-name">TXIPIRONES "PELATINTA" <span class="text-sm font-sans">(+3€)</span></div>
-                <div class="dish-detail">GUISADOS EN SU TINTA, ARROZ BASMATI, CEBOLLA CARAMELIZADA Y MAYONESA DE AJOS.</div>
-            </div>
-
-            <div class="dish-container">
-                <div class="dish-name">LOMO DE BAKALAO "CHIPO-ARRIERO" <span class="text-sm font-sans">(+3€)</span></div>
-                <div class="dish-detail">RACIÓN DE 250GR DE BACALAO CONFITADO Y NUESTRA SALSA AJOARRIERO CON UN TOQUE CHIPOTLE.</div>
-            </div>
-        </div>
-
-        <!-- Precio y Footer -->
-        <div class="price-section">
-            <p class="complement-text">* COMPLEMENTO PATATAS FRITAS (+2,50€)</p>
-            <p class="complement-text">* COMPLEMENTO TERRAZA 10%</p>
-            <div class="main-price">16,95€</div>
-            <span class="iva-text">IVA INCLUIDO</span>
-            
-            <div class="footer-info uppercase tracking-tight">
-                EL MENÚ INCLUYE PAN, AGUA O COPA DE VINO O CAÑA O REFRESCO, Y CAFÉ O INFUSIÓN
-            </div>
-            <div style="text-align:center; font-size:0.75rem; margin-top:12px; letter-spacing:2px; opacity:0.7; font-weight:bold;">DE 12:30 A 16:00</div>
-        </div>
-
+    <!-- Encabezado Estilo Polka -->
+    <div class="logo-header">
+        <div class="logo-main">PÓLKA</div>
+        <div class="menu-title">Menú Polkero</div>
     </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-12">
+        
+        <!-- PRIMEROS -->
+        <div class="section-box">
+            <div class="category-label">Primeros a elegir</div>
+            
+            <div class="dish-item">
+                <span class="dish-name">LA POLKA RUSA</span>
+                <div class="dish-description">NUESTRA ENSALADILLA RUSA CON PRODUCTOS KM 0, PIPARRAS, VENTRESCA, BONIATO, ANTXOA, ACEITUNAS Y MAHONESA DE VENTRESCA.</div>
+            </div>
+
+            <div class="dish-item">
+                <span class="dish-name">ENSALADA DE TOMATE MARINERA CON BURRATA</span>
+                <div class="dish-description">TOMATE KM 0, SARDINAS EN ACEITE, BURRATA, MIEL DE URBASA, RÚCULA Y PIPARRA.</div>
+            </div>
+
+            <div class="dish-item">
+                <span class="dish-name">ENSALADA DE PASTA</span>
+                <div class="dish-description">PASTA COCIDA, PERLAS DE MOZZARELLA, TOMATITOS CHERRY, LECHUGA, EDAMAME, ACEITUNAS NEGRAS Y VINAGRETA DE PESTO.</div>
+            </div>
+
+            <div class="dish-item">
+                <span class="dish-name">POLKE SALMÓN BOWL</span>
+                <div class="dish-description">SALMÓN FRESCO, ARROZ BASMATI, LECHUGA, GUACAMOLE, CHUTNEY DE MANGO, TOMATITOS, SÉSAMO Y SALSA TERIYAKI.</div>
+            </div>
+        </div>
+
+        <!-- SEGUNDOS -->
+        <div class="section-box">
+            <div class="category-label">Segundos a elegir</div>
+
+            <div class="dish-item">
+                <span class="dish-name">TXERRI PULLED BUN</span>
+                <div class="dish-description">ESPONJOSO PAN DE BRIOCHE, CARNE DE CERDO DESMECHADA, QUESO CHEDDAR, LECHUGA, CEBOLLA ROJA Y SALSA POLKERA.</div>
+            </div>
+
+            <div class="dish-item">
+                <span class="dish-name">CHICKEN BURGER 1838</span>
+                <div class="dish-description">ESPONJOSO PAN DE BRIOCHE, MUSLO DE POLLO FRITO, HUEVO COCIDO, CEBOLLA CARAMELIZADA Y MAHONESA DE AJOS.</div>
+            </div>
+
+            <div class="dish-item">
+                <span class="dish-name">TAKO-TALO COCHINO BBQ</span>
+                <div class="dish-description">TORTITAS DE MAÍZ, CERDO DESMECHADA, GUACAMOLE, JALAPEÑOS, QUESO CHEDDAR Y CEBOLLA MORADA.</div>
+            </div>
+
+            <div class="dish-item">
+                <span class="dish-name">WOK LUMAGORRI TANDOORI <span class="tag-plus">+3€</span></span>
+                <div class="dish-description">POLLO LUMAGORRI EN ESPECIAS TANDOORI, FIDEOS SOBA, PIMIENTO DE GERNIKA Y TXAKOLI.</div>
+            </div>
+
+            <div class="dish-item">
+                <span class="dish-name">TXIPIRONES "PELATINTA" <span class="tag-plus">+3€</span></span>
+                <div class="dish-description">GUISADOS EN SU TINTA, ARROZ BASMATI, CEBOLLA CARAMELIZADA Y MAYONESA DE AJOS.</div>
+            </div>
+
+            <div class="dish-item">
+                <span class="dish-name">LOMO DE BAKALAO "CHIPO-ARRIERO" <span class="tag-plus">+3€</span></span>
+                <div class="dish-description">RACIÓN DE 250GR DE BACALAO CONFITADO Y NUESTRA SALSA AJOARRIERO CON UN TOQUE CHIPOTLE.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN PRECIO ACTUALIZADO -->
+    <div class="price-hero">
+        <div class="complementos">
+            * COMPLEMENTO PATATAS FRITAS (+2,50€) / TERRAZA 10%
+        </div>
+        <div class="main-price">18,95€</div>
+        <div class="iva-tag">IVA INCLUIDO</div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-details">
+        EL MENÚ INCLUYE PAN, AGUA O COPA DE VINO O CAÑA O REFRESCO, Y CAFÉ O INFUSIÓN
+        <div class="horario">SERVICIO DE 12:30 A 16:00 · PLAZA SARRIEGI, SAN SEBASTIÁN</div>
+    </div>
+
+</div>
 
 </body>
 </html>
